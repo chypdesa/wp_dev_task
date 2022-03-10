@@ -55,6 +55,13 @@ class casino_reviews extends WP_Widget {
         $responseObj = json_decode($response);
         $casinoArr = $responseObj->toplists->{'575'};                        /* Define array to display - 575 TODO: Make this changeable through backoffice */
     
+        /* Order ASC $casinoArr by 'position' key */
+        usort($casinoArr, function($a, $b){
+            if ($a->position == $b->position)
+                return (0);
+            return (($a->position < $b->position) ? -1 : 1);
+        });
+
         /* Render List Start Wrapper*/
         echo ''.
         '<div class="body-wrapper">'.
