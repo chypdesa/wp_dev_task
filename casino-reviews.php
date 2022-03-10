@@ -67,16 +67,16 @@ class casino_reviews extends WP_Widget {
         '<div class="casino-reviews">'.
             '<div class="container casino-reviews-container px-4 py-2">'.
                 '<div class="row list-header py-3">'.
-                    '<div class="col-3 text-center">'.
+                    '<div class="col-12 col-md-3 text-center">'.
                         '<h3>Casino</h3>'.
                     '</div>'.
-                    '<div class="col-3 text-center">'.
+                    '<div class="col-12 col-md-3 text-center">'.
                         '<h3>Bonus</h3>'.
                     '</div>'.
-                    '<div class="col-3 text-center">'.
+                    '<div class="col-12 col-md-3 text-center">'.
                         '<h3>Features</h3>'.
                     '</div>'.
-                    '<div class="col-3 text-center">'.
+                    '<div class="col-12 col-md-3 text-center">'.
                         '<h3>Play</h3>'.
                     '</div>'.
                 '</div>';
@@ -85,13 +85,13 @@ class casino_reviews extends WP_Widget {
                 foreach ($casinoArr as $casino) {
                     echo ''.
                     '<div class="row list-cell align-items-center">'.
-                        '<div class="col-3 list-cell__casino text-center py-4">'.
+                        '<div class="col-12 col-md-3 list-cell__casino text-center py-3 py-md-4">'.
                             '<img class="img-fluid mb-3" src="'.$casino->logo.'">'.
                             '<div class="review-btn">'.
                                 '<a href="/'.$casino->brand_id.'">Review</a>'.
                             '</div>'.
                         '</div>'.
-                        '<div class="col-3 list-cell__bonus text-center py-4 px-5">'.
+                        '<div class="col-12 col-md-3 list-cell__bonus text-center py-md-4 px-md-3 px-lg-5">'.
                             '<div class="review-stars">'; 
 
                         /* Fill stars according to rating */
@@ -108,7 +108,7 @@ class casino_reviews extends WP_Widget {
                         echo '</div>'.
                             '<p>'.$casino->info->bonus.'</p>'.
                         '</div>'.
-                        '<div class="col-3 list-cell__features text-center py-4">'.
+                        '<div class="col-12 col-md-3 list-cell__features text-center py-3 py-md-4">'.
                             '<ul>';
 
                         /* Render features from array*/        
@@ -118,7 +118,7 @@ class casino_reviews extends WP_Widget {
 
                         echo '</ul>'.
                         '</div>'.
-                        '<div class="col-3 list-cell__play text-center py-4">'.
+                        '<div class="col-12 col-md-3 list-cell__play text-center py-md-4">'.
                             '<a href="'.$casino->play_url.'">'.
                                 '<button>PLAY NOW</button>'.
                             '</a>'.
