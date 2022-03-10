@@ -55,7 +55,7 @@ class casino_reviews extends WP_Widget {
         $responseObj = json_decode($response);
         $casinoArr = $responseObj->toplists->{'575'};                        /* Define array to display - 575 TODO: Make this changeable through backoffice */
     
-        /* Render List Wrapper*/
+        /* Render List Start Wrapper*/
         echo ''.
         '<div class="body-wrapper">'.
             '<div class="container px-4 py-2">'.
@@ -72,9 +72,48 @@ class casino_reviews extends WP_Widget {
                     '<div class="col-3 text-center">'.
                         '<h3>Play</h3>'.
                     '</div>'.
-                '</div>'.
-                '<!-- Dynamic List -->'.                                        /* TODO: Inject array populated HTML here */
-            '</div>'.
+                '</div>';
+            
+                /* Render dynamic list row for each casino in array */
+                foreach ($casinoArr as $casino) {
+                    echo ''.
+                    '<div class="row list-cell align-items-center">'.
+                        '<div class="col-3 list-cell__casino text-center py-4">'.
+                            '<img class="img-fluid mb-3" src="'.$casino->logo.'">'.
+                            '<div class="review-btn">'.
+                                '<a href="/'.$casino->brand_id.'">Review</a>'.
+                            '</div>'.
+                        '</div>'.
+                        '<div class="col-3 list-cell__bonus text-center py-4 px-5">'.
+                            '<div class="review-stars">'. 
+                                /* TODO: Make this dynamic */
+                                '<i class="fa-solid fa-star"></i>'.
+                                '<i class="fa-solid fa-star"></i>'.
+                                '<i class="fa-solid fa-star"></i>'.
+                                '<i class="fa-solid fa-star"></i>'.
+                                '<i class="fa-solid fa-star"></i>'.
+                            '</div>'.
+                            '<p>'.$casino->info->bonus.'</p>'.
+                        '</div>'.
+                        '<div class="col-3 list-cell__features text-center py-4">'.
+                            '<ul>'.
+                                /* TODO: Make this dynamic */
+                                '<li>Lorem ipsum</li>'.
+                                '<li>Lorem ipsum</li>'.
+                                '<li>Lorem ipsum</li>'.
+                            '</ul>'.
+                        '</div>'.
+                        '<div class="col-3 list-cell__play text-center py-4">'.
+                            '<a href="'.$casino->play_url.'">'.
+                                '<button>PLAY NOW</button>'.
+                            '</a>'.
+                        '<p class="fs-12 mt-3 notice">'.$casino->terms_and_conditions.'</p>'.
+                        '</div>'.
+                    '</div>';
+                } 
+
+        /* Render List End Wrapper */     
+        echo '</div>'.
         '</div>';
     
     }
