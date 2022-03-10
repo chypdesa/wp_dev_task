@@ -85,23 +85,31 @@ class casino_reviews extends WP_Widget {
                             '</div>'.
                         '</div>'.
                         '<div class="col-3 list-cell__bonus text-center py-4 px-5">'.
-                            '<div class="review-stars">'. 
-                                /* TODO: Make this dynamic */
-                                '<i class="fa-solid fa-star"></i>'.
-                                '<i class="fa-solid fa-star"></i>'.
-                                '<i class="fa-solid fa-star"></i>'.
-                                '<i class="fa-solid fa-star"></i>'.
-                                '<i class="fa-solid fa-star"></i>'.
-                            '</div>'.
+                            '<div class="review-stars">'; 
+
+                        /* Fill stars according to rating */
+                        $rating = $casino->info->rating;
+                        for ($i=1; $i <= 5 ; $i++) { 
+                            if($i <= $casino->info->rating){
+                                echo '<i class="fa-solid fa-star"></i>';
+                            }
+                            else{
+                                echo '<i class="fa-regular fa-star"></i>';
+                            }
+                        }
+
+                        echo '</div>'.
                             '<p>'.$casino->info->bonus.'</p>'.
                         '</div>'.
                         '<div class="col-3 list-cell__features text-center py-4">'.
-                            '<ul>'.
-                                /* TODO: Make this dynamic */
-                                '<li>Lorem ipsum</li>'.
-                                '<li>Lorem ipsum</li>'.
-                                '<li>Lorem ipsum</li>'.
-                            '</ul>'.
+                            '<ul>';
+
+                        /* Render features from array*/        
+                        foreach ($casino->info->features as $feat) {
+                            echo '<li>'.$feat.'</li>';
+                        }
+
+                        echo '</ul>'.
                         '</div>'.
                         '<div class="col-3 list-cell__play text-center py-4">'.
                             '<a href="'.$casino->play_url.'">'.
