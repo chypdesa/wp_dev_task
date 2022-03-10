@@ -1,0 +1,33 @@
+.casino-reviews .fs-12{ 
+    font-size:12px; 
+}
+.casino-reviews .casino-reviews-container{ 
+    background-color:#fff; 
+}
+.casino-reviews .list-header{
+    background-color:#d29f36;
+}
+.casino-reviews .list-header h3{
+    font-size:16px;
+    text-align:center;
+    margin-bottom:0px;
+}
+.casino-reviews .list-cell{
+    border-bottom:solid 1px black;
+}
+.casino-reviews .list-cell__play button{
+    background:green;
+    border:none;
+    outline:none;
+    border-radius:10px;
+    padding: 15px 40px;
+    color:white;
+    text-decoration:underline;
+    font-size:20px;
+}
+.casino-reviews .list-cell__play .notice a{
+    color:red;
+}
+.casino-reviews .review-stars{
+    margin-bottom:15px;
+}

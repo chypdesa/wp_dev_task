@@ -3,7 +3,7 @@
 * Plugin Name: WP Casino Reviews
 * Plugin URI: http://paulosa.pt
 * Description: Probably the best casino reviews plugin in the market, according to my mother.
-* Version: 1.0.0
+* Version: 1.0.1
 * Author: Paulo Sa
 * Author URI: http://paulosa.pt
 * License: GPL2
@@ -64,8 +64,8 @@ class casino_reviews extends WP_Widget {
 
         /* Render List Start Wrapper*/
         echo ''.
-        '<div class="body-wrapper">'.
-            '<div class="container px-4 py-2">'.
+        '<div class="casino-reviews">'.
+            '<div class="container casino-reviews-container px-4 py-2">'.
                 '<div class="row list-header py-3">'.
                     '<div class="col-3 text-center">'.
                         '<h3>Casino</h3>'.
