@@ -45,7 +45,7 @@ class casino_reviews extends WP_Widget {
       curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
       $response = curl_exec($curl);                                         
       $err = curl_error($curl);                                             /* Error feedback */
-      curl_close($curl); /* Close curl session */
+      curl_close($curl);                                                    /* Close curl session */
       // End API Request
 
       if ($err) {                                                            /* If request fails */
@@ -53,8 +53,31 @@ class casino_reviews extends WP_Widget {
       } 
       else {                                                                 /* If request succeeds */
         $responseObj = json_decode($response);
-        var_dump($responseObj);
-      }
+        $casinoArr = $responseObj->toplists->{'575'};                        /* Define array to display - 575 TODO: Make this changeable through backoffice */
+    
+        /* Render List Wrapper*/
+        echo ''.
+        '<div class="body-wrapper">'.
+            '<div class="container px-4 py-2">'.
+                '<div class="row list-header py-3">'.
+                    '<div class="col-3 text-center">'.
+                        '<h3>Casino</h3>'.
+                    '</div>'.
+                    '<div class="col-3 text-center">'.
+                        '<h3>Bonus</h3>'.
+                    '</div>'.
+                    '<div class="col-3 text-center">'.
+                        '<h3>Features</h3>'.
+                    '</div>'.
+                    '<div class="col-3 text-center">'.
+                        '<h3>Play</h3>'.
+                    '</div>'.
+                '</div>'.
+                '<!-- Dynamic List -->'.                                        /* TODO: Inject array populated HTML here */
+            '</div>'.
+        '</div>';
+    
+    }
       echo $args['after_widget'];
     } 
   
