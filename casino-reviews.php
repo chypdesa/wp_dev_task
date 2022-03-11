@@ -1,11 +1,11 @@
 <?php 
 /**
 * Plugin Name: WP Casino Reviews
-* Plugin URI: http://paulosa.pt
+* Plugin URI: https://paulosa.pt
 * Description: Probably the best casino reviews plugin in the market, according to my mother.
-* Version: 1.0.2
+* Version: 1.1.0
 * Author: Paulo Sa
-* Author URI: http://paulosa.pt
+* Author URI: https://paulosa.pt
 * License: GPL2
 */
 
@@ -41,7 +41,7 @@ class casino_reviews extends WP_Widget {
   
       // Start API Request
       $curl = curl_init();
-      curl_setopt($curl, CURLOPT_URL, 'https://api.mocki.io/v2/060d39fa');  /* API URL */
+      curl_setopt($curl, CURLOPT_URL, $settings['apiurl']);                 /* API URL - Set on plugin settings */
       curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
       $response = curl_exec($curl);                                         
       $err = curl_error($curl);                                             /* Error feedback */
@@ -53,7 +53,7 @@ class casino_reviews extends WP_Widget {
       } 
       else {                                                                 /* If request succeeds */
         $responseObj = json_decode($response);
-        $casinoArr = $responseObj->toplists->{'575'};                        /* Define array to display - 575 TODO: Make this changeable through backoffice */
+        $casinoArr = $responseObj->toplists->{$settings['listId']};          /* Select array by List ID - Set on plugin settings */
     
         /* Order ASC $casinoArr by 'position' key */
         usort($casinoArr, function($a, $b){
@@ -133,5 +133,39 @@ class casino_reviews extends WP_Widget {
       echo $args['after_widget'];
     } 
   
+    /* Backoffice settings */
+    public function form( $settings ) {
+        if ( isset( $settings['apiurl'] ) ) {
+            $api_url = $settings['apiurl'];
+        } 
+        else {
+            $api_url = __( 'https://api.mocki.io/v2/060d39fa', 'wpb_widget_domain' );
+        }
+        if( isset( $settings[ 'listId' ] ) ) { 
+            $toplist_id = $settings[ 'listId' ]; 
+        } 
+        else { 
+            $toplist_id = __( '575', 'wpb_widget_domain' ); 
+        }
+        ?>
+        <p>
+            <label for="<?php echo $this->get_field_id( 'apiurl' ); ?>"><?php _e( 'API:' ); ?></label>
+            <input class="widefat" id=" <?php echo $this->get_field_id( 'apiurl' ); ?>" name="<?php echo $this->get_field_name( 'apiurl' ); ?>" type="text" value="<?php echo esc_attr( $api_url ); ?>" />
+        </p>
+        <p>
+        <label for="<?php echo $this->get_field_id( 'listId' ); ?>"><?php _e( 'Toplist ID:' ); ?></label>
+            <input class="widefat" id=" <?php echo $this->get_field_id( 'listId' ); ?>" name="<?php echo $this->get_field_name( 'listId' ); ?>" type="text" value="<?php echo esc_attr( $toplist_id ); ?>" />
+        </p>
+        <?php
+    }
+
+    /* Update settings */
+    public function update( $new_settings, $old_settings ) {
+        $settings = array();
+        $settings['apiurl'] = (!empty($new_settings['apiurl'])) ? strip_tags($new_settings['apiurl']) : '';
+        $settings['listId'] = (!empty($new_settings['listId'])) ? strip_tags($new_settings['listId']) : '';
+        return $settings;
+    }
+
   } 
 ?>

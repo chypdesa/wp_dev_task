@@ -19,7 +19,7 @@
     border-bottom: none;
 }
 .casino-reviews .list-cell__play button{
-    background:green;
+    background:rgb(0, 97, 0);
     border:none;
     outline:none;
     border-radius:10px;
@@ -27,6 +27,12 @@
     color:white;
     text-decoration:underline;
     font-size:20px;
+    transition:all 0.3s ease-in-out;
+}
+.casino-reviews .list-cell__play button:hover {
+    cursor:pointer;
+    transform:translateY(-1px);
+    background:rgb(2, 65, 2);
 }
 .casino-reviews .list-cell__play .notice a{
     color:red;
