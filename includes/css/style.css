@@ -1,6 +1,9 @@
+/* Global */
 .casino-reviews .fs-12{ 
     font-size:12px; 
 }
+
+/* Container*/
 .casino-reviews .casino-reviews-container{ 
     background-color:#fff; 
 }
@@ -18,6 +21,8 @@
 .casino-reviews .list-cell:last-child{  
     border-bottom: none;
 }
+
+/* Play Column */
 .casino-reviews .list-cell__play button{
     background:rgb(0, 97, 0);
     border:none;
@@ -37,17 +42,21 @@
 .casino-reviews .list-cell__play .notice a{
     color:red;
 }
-.casino-reviews .review-stars{
+
+/* Bonus Column */
+.casino-reviews .list-cell__bonus .review-stars{
     color:#d29f36;
     font-size:20px; 
     padding-top:10px;
 }
-.casino-reviews .review-stars .review-stars__star{
+.casino-reviews .list-cell__bonus .review-stars .review-stars__star{
     margin:0px 2px;
 }
 .casino-reviews .list-cell__bonus p{
     font-size:14px;
 }
+
+/* Features Column */
 .casino-reviews .list-cell__features ul{
     padding-left:0px;
 }
