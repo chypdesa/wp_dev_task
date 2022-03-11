@@ -3,7 +3,7 @@
 * Plugin Name: WP Casino Reviews
 * Plugin URI: http://paulosa.pt
 * Description: Probably the best casino reviews plugin in the market, according to my mother.
-* Version: 1.0.1
+* Version: 1.0.2
 * Author: Paulo Sa
 * Author URI: http://paulosa.pt
 * License: GPL2
@@ -62,9 +62,54 @@ class casino_reviews extends WP_Widget {
             return (($a->position < $b->position) ? -1 : 1);
         });
 
-        /* Render List Start Wrapper*/
-        echo ''.
-        '<div class="casino-reviews">'.
+        /* Build dynamic list row for each casino in array */
+        $rowsPrnt = "";
+
+        foreach ($casinoArr as $casino) {   
+
+            /* Calculate rating stars */                
+            $rating = $casino->info->rating;
+            $ratingPrnt = "";
+            for ($i=1; $i <= 5 ; $i++) { 
+                if($i <= $casino->info->rating){ $ratingPrnt.= '<i class="fa-solid fa-star"></i>'; }
+                else{ $ratingPrnt.= '<i class="fa-regular fa-star"></i>'; }
+            }
+
+            /* Populate feature list */ 
+            $featuresPrnt = "";
+            foreach ($casino->info->features as $feat) {
+                $featuresPrnt .= '<li>'.$feat.'</li>';
+            }
+
+            $rowsPrnt .= '<div class="row list-cell align-items-center">'.
+                '<div class="col-12 col-md-3 list-cell__casino text-center py-3 py-md-4">'.
+                    '<img class="img-fluid mb-3" src="'.$casino->logo.'">'.
+                    '<div class="review-btn">'.
+                        '<a href="/'.$casino->brand_id.'">Review</a>'.
+                    '</div>'.
+                '</div>'.
+                '<div class="col-12 col-md-3 list-cell__bonus text-center py-md-4 px-md-3 px-lg-5">'.
+                    '<div class="review-stars">'.
+                        $ratingPrnt.       
+                    '</div>'.
+                    '<p>'.$casino->info->bonus.'</p>'.
+                '</div>'.
+                '<div class="col-12 col-md-3 list-cell__features text-center py-3 py-md-4">'.
+                    '<ul>'.
+                        $featuresPrnt.
+                    '</ul>'.
+                '</div>'.
+                '<div class="col-12 col-md-3 list-cell__play text-center py-md-4">'.
+                    '<a href="'.$casino->play_url.'">'.
+                        '<button>PLAY NOW</button>'.
+                    '</a>'.
+                '<p class="fs-12 mt-3 notice">'.$casino->terms_and_conditions.'</p>'.
+                '</div>'.
+            '</div>';
+        } 
+
+        /* Render */
+        echo '<div class="casino-reviews">'.
             '<div class="container casino-reviews-container px-4 py-2">'.
                 '<div class="row list-header py-3">'.
                     '<div class="col-12 col-md-3 text-center">'.
@@ -79,56 +124,9 @@ class casino_reviews extends WP_Widget {
                     '<div class="col-12 col-md-3 text-center">'.
                         '<h3>Play</h3>'.
                     '</div>'.
-                '</div>';
-            
-                /* Render dynamic list row for each casino in array */
-                foreach ($casinoArr as $casino) {
-                    echo ''.
-                    '<div class="row list-cell align-items-center">'.
-                        '<div class="col-12 col-md-3 list-cell__casino text-center py-3 py-md-4">'.
-                            '<img class="img-fluid mb-3" src="'.$casino->logo.'">'.
-                            '<div class="review-btn">'.
-                                '<a href="/'.$casino->brand_id.'">Review</a>'.
-                            '</div>'.
-                        '</div>'.
-                        '<div class="col-12 col-md-3 list-cell__bonus text-center py-md-4 px-md-3 px-lg-5">'.
-                            '<div class="review-stars">'; 
-
-                        /* Fill stars according to rating */
-                        $rating = $casino->info->rating;
-                        for ($i=1; $i <= 5 ; $i++) { 
-                            if($i <= $casino->info->rating){
-                                echo '<i class="fa-solid fa-star"></i>';
-                            }
-                            else{
-                                echo '<i class="fa-regular fa-star"></i>';
-                            }
-                        }
-
-                        echo '</div>'.
-                            '<p>'.$casino->info->bonus.'</p>'.
-                        '</div>'.
-                        '<div class="col-12 col-md-3 list-cell__features text-center py-3 py-md-4">'.
-                            '<ul>';
-
-                        /* Render features from array*/        
-                        foreach ($casino->info->features as $feat) {
-                            echo '<li>'.$feat.'</li>';
-                        }
-
-                        echo '</ul>'.
-                        '</div>'.
-                        '<div class="col-12 col-md-3 list-cell__play text-center py-md-4">'.
-                            '<a href="'.$casino->play_url.'">'.
-                                '<button>PLAY NOW</button>'.
-                            '</a>'.
-                        '<p class="fs-12 mt-3 notice">'.$casino->terms_and_conditions.'</p>'.
-                        '</div>'.
-                    '</div>';
-                } 
-
-        /* Render List End Wrapper */     
-        echo '</div>'.
+                '</div>'.
+                $rowsPrnt.    /* Inject list rows HTML */ 
+            '</div>'.
         '</div>';
     
     }
